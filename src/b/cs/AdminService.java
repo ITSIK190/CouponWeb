@@ -1,12 +1,14 @@
 package b.cs;
 
+import java.util.ArrayList;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-
+import c.hlp.CompanyResponce;
 import core.beans.Company;
 import core.cs.ClientType;
 import core.cs.CouponSystem;
@@ -15,6 +17,7 @@ import core.facade.AdminFacade;
 
 @Path("/Admin")
 public class AdminService {
+	private CompanyResponce responce;
 
 	static {
 		try {
@@ -28,8 +31,8 @@ public class AdminService {
 	// This method is called if HTML is request
 	@Path("/createCompanyService")
 	@GET
-	@Produces(MediaType.TEXT_HTML)
-	public String createCompanyService(@QueryParam("User") String user, @QueryParam("PW") String pw,
+	@Produces(MediaType.APPLICATION_XML)
+	public CompanyResponce createCompanyService(@QueryParam("User") String user, @QueryParam("PW") String pw,
 			@QueryParam("Email") String email, @QueryParam("name") String name,
 			@QueryParam("CompanyPw") String companyPw) {
 
@@ -39,16 +42,18 @@ public class AdminService {
 			adminfacade.createCompany(company);
 		} catch (CouponSystemException e) {
 			// TODO Auto-generated catch block
-			return "error: " + e.getMessage();
+			responce = new CompanyResponce("error: " + e.getMessage());
+			return responce;
 		}
 
-		return "success";
+		responce = new CompanyResponce("success");
+		return responce;
 	}
 
 	@Path("/removeCompanyService")
 	@GET
-	@Produces(MediaType.TEXT_HTML)
-	public String removeCompanyService(@QueryParam("User") String user, @QueryParam("PW") String pw,
+	@Produces(MediaType.APPLICATION_XML)
+	public CompanyResponce removeCompanyService(@QueryParam("User") String user, @QueryParam("PW") String pw,
 			@QueryParam("Email") String email) {
 
 		try {
@@ -57,16 +62,18 @@ public class AdminService {
 			adminfacade.removeCompany(company);
 		} catch (CouponSystemException e) {
 			// TODO Auto-generated catch block
-			return "error: " + e.getMessage();
+			responce = new CompanyResponce("error: " + e.getMessage());
+			return responce;
 		}
 
-		return "success";
+		responce = new CompanyResponce("success");
+		return responce;
 	}
 
 	@Path("/updateCompanyService")
 	@GET
-	@Produces(MediaType.TEXT_HTML)
-	public String updateCompanyService(@QueryParam("User") String user, @QueryParam("PW") String pw,
+	@Produces(MediaType.APPLICATION_XML)
+	public CompanyResponce updateCompanyService(@QueryParam("User") String user, @QueryParam("PW") String pw,
 			@QueryParam("Email") String email, @QueryParam("name") String name,
 			@QueryParam("CompanyPw") String companyPw) {
 
@@ -76,33 +83,40 @@ public class AdminService {
 			adminfacade.updateCompany(company);
 		} catch (CouponSystemException e) {
 			// TODO Auto-generated catch block
-			return "error: " + e.getMessage();
+			responce = new CompanyResponce("error: " + e.getMessage());
+			return responce;
 		}
 
-		return "success";
+		responce = new CompanyResponce("success");
+		return responce;
 	}
 
 	@Path("/getCompanyService")
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
-	public Company getCompanyService(@QueryParam("User") String user, @QueryParam("PW") String pw,
+	public CompanyResponce getCompanyService(@QueryParam("User") String user, @QueryParam("PW") String pw,
 			@QueryParam("Email") String email)  {
 		
 
 		AdminFacade adminfacade;
 		Company company = new Company(null, null, email);
+		
+		responce = new CompanyResponce();
 		try {
 			adminfacade = (AdminFacade) CouponSystem.getInstance().login(user, pw, ClientType.ADMIN);
+			System.out.println(company);
 			company = adminfacade.getCompany(company);
+			ArrayList<Company> companies = new ArrayList<>();
+			companies.add(company);
+			responce.setCompanies(companies);
 		} catch (CouponSystemException e) {
 			// TODO Auto-generated catch block
-			company.setEmail(e.getMessage());
+			responce.setMessage("error: " + e.getMessage());
+			return responce;
 		}
-		 
-		
-		
 
-		return company;
+		responce.setMessage("success");
+		return responce;
 	}
 
 }
