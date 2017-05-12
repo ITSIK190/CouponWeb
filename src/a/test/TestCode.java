@@ -1,10 +1,12 @@
 package a.test;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import core.beans.Company;
 import core.beans.Coupon;
+import core.beans.CouponType;
 import core.cs.ClientType;
 import core.cs.CouponSystem;
 import core.exceptions.CouponSystemException;
@@ -28,7 +30,20 @@ public class TestCode {
 //		long ts = System.currentTimeMillis();
 		Date past = new Date(cal.getTime().getTime());
 		
-		Coupon coupon = new Coupon("", startDate, endDate, amount, type, message, price, image)
+		java.util.Date pastutilDate = new java.util.Date();
+		java.util.Date futureutilDate = new java.util.Date();
+		
+		
+		java.sql.Date pastsqlDate = new java.sql.Date(pastutilDate.getTime());
+		java.sql.Date futuresqlDate = new java.sql.Date(futureutilDate.getTime());
+		
+		
+		 
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		//Date date =  df.parse("2010-12-30");
+		 
+		 
+		Coupon coupon = new Coupon("title", pastsqlDate, futuresqlDate, 50, CouponType.CAMPING, "message", 90, "image");
 		
 		try {
 		AdminFacade adminfacade = (AdminFacade) CouponSystem.getInstance().login("Admin", "Admin", ClientType.ADMIN);
