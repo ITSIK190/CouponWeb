@@ -7,23 +7,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 import core.beans.Company;
 
 @XmlRootElement
-public class CompanyResponce {
+public class CompanyResponse {
 	private String message;
 	private ArrayList<Company> companies;
 	
 	
-	public CompanyResponce() {
+	public CompanyResponse() {
 		super();
 	}
 	
 	
-	public CompanyResponce(String message) {
+	public CompanyResponse(String message) {
 		super();
 		this.message = message;
 	}
 
 
-	public CompanyResponce(String message, ArrayList<Company> companies) {
+	public CompanyResponse(String message, ArrayList<Company> companies) {
 		super();
 		this.message = message;
 		this.companies = companies;
@@ -42,7 +42,7 @@ public class CompanyResponce {
 	}
 	@Override
 	public String toString() {
-		return "CompanyResponce [message=" + message + ", companies=" + companies + "]";
+		return "CompanyResponse [message=" + message + ", companies=" + companies + "]";
 	}
 	
 	
