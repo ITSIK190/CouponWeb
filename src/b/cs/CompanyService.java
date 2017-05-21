@@ -48,12 +48,12 @@ public class CompanyService {
 			Date utilStartDate = df.parse(startDate);
 			Date utilEndDate = df.parse(endDate);
 
-			java.sql.Date sqlStartDate = new java.sql.Date(utilStartDate.getTime());
-			java.sql.Date sqlEndDate = new java.sql.Date(utilEndDate.getTime());
+			//java.sql.Date sqlStartDate = new java.sql.Date(utilStartDate.getTime());
+			//java.sql.Date sqlEndDate = new java.sql.Date(utilEndDate.getTime());
 
 			CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstance().login(user, pw,
 					ClientType.COMPANY);
-			Coupon coupon = new Coupon(title, sqlStartDate, sqlEndDate, Integer.parseInt(amount),
+			Coupon coupon = new Coupon(title, utilStartDate, utilEndDate, Integer.parseInt(amount),
 					CouponType.valueOf(type), message, Double.parseDouble(price), image);
 
 			// Customer custromer = new Customer(name, customerPw, email);
@@ -104,12 +104,12 @@ public class CompanyService {
 			Date utilStartDate = df.parse(startDate);
 			Date utilEndDate = df.parse(endDate);
 
-			java.sql.Date sqlStartDate = new java.sql.Date(utilStartDate.getTime());
-			java.sql.Date sqlEndDate = new java.sql.Date(utilEndDate.getTime());
+//			java.sql.Date sqlStartDate = new java.sql.Date(utilStartDate.getTime());
+//			java.sql.Date sqlEndDate = new java.sql.Date(utilEndDate.getTime());
 
 			CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstance().login(user, pw,
 					ClientType.COMPANY);
-			Coupon coupon = new Coupon(title, sqlStartDate, sqlEndDate, Integer.parseInt(amount),
+			Coupon coupon = new Coupon(title, utilStartDate, utilEndDate, Integer.parseInt(amount),
 					CouponType.valueOf(type), message, Double.parseDouble(price), image);
 
 			companyFacade.updateCoupon(coupon);
