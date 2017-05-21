@@ -72,12 +72,12 @@ public class CompanyService {
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
 	public CouponResponse removeCouponService(@QueryParam("User") String user, @QueryParam("PW") String pw,
-			@QueryParam("Name") String name) {
+			@QueryParam("Title") String title) {
 
 		try {
 			CompanyFacade companyFacade = (CompanyFacade) CouponSystem.getInstance().login(user, pw,
 					ClientType.COMPANY);
-			Coupon coupon = new Coupon();
+			Coupon coupon = new Coupon(title);
 			companyFacade.removeCoupon(coupon);
 		} catch (CouponSystemException e) {
 			// TODO Auto-generated catch block
